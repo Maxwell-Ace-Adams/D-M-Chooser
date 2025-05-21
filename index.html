@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <script src="/socket.io/socket.io.js"></script>
+
+</head>
+
+<!-- look, we all know its badly written -->
+
+<body>
+    <h2 class="mobile-message">This site is only available on desktop. Please use a larger screen.</h2>
+    <div class="desktop-only">
+        
+    <header>
+    
+        <!-- Header -->
+         
+
+            <div  id="header" class="header">
+                <img src="" alt="">
+                
+                
+                <ul style="list-style: none; display: flex; gap: 50px; ">
+                    <a href="#header" style="text-decoration-style: none; color: white;"><li>Home</li></a>
+                    <a href="#form" style="text-decoration-style: none; color: white;"><li>ChatRoom</li></a>
+                </ul>
+                <h1 style="text-align: center; padding-left: 430px;">[D-M-Chooser]</h1>
+            </div>
+            <h3 style=" text-align: center; font-family:  'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">LETS SEE!! Which do you think this looks cooler?</h3>
+        
+    </header>
+    <main>
+        <div class="IMGS">
+        <div >
+            <img class="IMG1" src="https://picsum.photos/250?random=1" alt="Placeholder Image 1">
+
+
+        </div>
+        <div>
+            <img class="IMG2" src="https://picsum.photos/250?random=2" alt="Placeholder Image 2">
+        </div> 
+        </div>
+    </main>
+    <footer>
+        <br><br><br>
+        <div style="display: flex;">
+        <div class="button1" style="padding-left: 570px;">
+            <a href="index.html" alt="Random Image 1"><button >Picture 1</button></a>
+            
+        </div>
+        <div class="button2" style="padding-left: 230px;">
+        <a href="index.html" alt="Random Image 2"><button >Picture 2</button></a>
+            
+        </div>
+        </div>
+        <br><br><br><br><br><br><br><br>
+        <div class="footer">
+            <h2>We are very official</h2>
+        </div>
+        <br><br>
+
+        <!-- Live Chat -->
+         <h2 style="text-decoration: underline; text-align: center; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">[Web chat]</h2>
+        <br><br><br>
+        <div class="message_wrapper">
+        <p style="border-radius: 4px; background-color: #efefef; text-align: left; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;" id="messages">
+            
+        </p>
+        </div>
+
+         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+         <form id="form">
+            <div class="text-input-wrapper">
+            <input class="text-input" type="text" id="input" autocomplete="off">
+            <input class="text-input-button" type="submit" value="Send">
+            </div>
+            
+        </form>
+        
+
+
+    </footer>
+
+    <script>
+        // Function to generate a random image with a unique URL
+        function generateRandomImage(imgId) {
+            const randomImageUrl = `https://picsum.photos/200/300?random=${Math.random()}`;
+            document.getElementById(imgId).src = randomImageUrl;
+        }
+
+        // Generate random images on page load
+        generateRandomImage('image1');
+        generateRandomImage('image2');
+    </script>
+
+<script>
+    // Function to generate a random image URL
+    function generateRandomImage() {
+        return `https://picsum.photos/200/300?random=${Math.random()}`;
+    }
+
+    // Assign random image URLs to the two image elements
+    document.getElementById('image1').src = generateRandomImage();
+    document.getElementById('image2').src = generateRandomImage();
+</script>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    // var socket = io();
+    // var userName = 'User' + Math.round(Math.random() * 10000); 
+
+    // socket.on('connect', () => {
+    //     socket.emit('joined', userName);
+    // });
+
+    // var form = document.getElementById('form');
+    // var input = document.getElementById('input');
+    // var messages = document.getElementById('messages');
+
+    // form.onsubmit = function(e) {
+    //     e.preventDefault();
+    //     if (input.value) {
+    //         socket.emit('message', input.value);
+    //         input.value = '';
+    //     }
+    // }
+
+    // socket.on('message', function(msg) {
+    //     messages.innerHTML = msg + '<br>' + messages.innerHTML;
+    // });
+
+    var socket = io();
+
+    // Check if a username is already stored
+    let userName = localStorage.getItem('userName');
+
+    // If not, generate and store it
+    if (!userName) {
+        userName = 'User' + Math.round(Math.random() * 10000);
+        localStorage.setItem('userName', userName);
+    }
+
+    // Now use this persistent userName
+    socket.on('connect', () => {
+        socket.emit('joined', userName);
+    });
+
+    var form = document.getElementById('form');
+    var input = document.getElementById('input');
+    var messages = document.getElementById('messages');
+
+    form.onsubmit = function(e) {
+        e.preventDefault();
+        if (input.value) {
+            socket.emit('message', input.value);
+            input.value = '';
+        }
+    }
+
+    socket.on('message', function(msg) {
+        messages.innerHTML = msg + '<br>' + messages.innerHTML;
+    });
+
+
+</script>
+
+</div>
+</body>
+</html>
