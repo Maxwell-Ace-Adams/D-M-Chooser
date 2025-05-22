@@ -33,12 +33,12 @@
     <main>
         <div class="IMGS">
         <div >
-            <img class="IMG1" src="https://picsum.photos/250?random=1" alt="Placeholder Image 1">
+            <img class="IMG1" id="image1" src="https://picsum.photos/250?random=1" alt="Placeholder Image 1">
 
 
         </div>
         <div>
-            <img class="IMG2" src="https://picsum.photos/250?random=2" alt="Placeholder Image 2">
+            <img class="IMG2" id="image2" src="https://picsum.photos/250?random=2" alt="Placeholder Image 2">
         </div> 
         </div>
     </main>
@@ -131,25 +131,60 @@
     //     messages.innerHTML = msg + '<br>' + messages.innerHTML;
     // });
 
-    var socket = io();
+    // var socket = io();
 
-    // Check if a username is already stored
+    // // Check if a username is already stored
+    // let userName = localStorage.getItem('userName');
+
+    // // If not, generate and store it
+    // if (!userName) {
+    //     userName = 'User' + Math.round(Math.random() * 10000);
+    //     localStorage.setItem('userName', userName);
+    // }
+
+    // // Now use this persistent userName
+    // socket.on('connect', () => {
+    //     socket.emit('joined', userName);
+    // });
+
+    // var form = document.getElementById('form');
+    // var input = document.getElementById('input');
+    // var messages = document.getElementById('messages');
+
+    // form.onsubmit = function(e) {
+    //     e.preventDefault();
+    //     if (input.value) {
+    //         socket.emit('message', input.value);
+    //         input.value = '';
+    //     }
+    // }
+
+    // socket.on('message', function(msg) {
+    //     messages.innerHTML = msg + '<br>' + messages.innerHTML;
+    // });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const socket = io();
+
+    
     let userName = localStorage.getItem('userName');
-
-    // If not, generate and store it
     if (!userName) {
         userName = 'User' + Math.round(Math.random() * 10000);
         localStorage.setItem('userName', userName);
     }
 
-    // Now use this persistent userName
+    
+    console.log("Your username is:", userName);
+
+    
     socket.on('connect', () => {
         socket.emit('joined', userName);
     });
 
-    var form = document.getElementById('form');
-    var input = document.getElementById('input');
-    var messages = document.getElementById('messages');
+    const form = document.getElementById('form');
+    const input = document.getElementById('input');
+    const messages = document.getElementById('messages');
 
     form.onsubmit = function(e) {
         e.preventDefault();
@@ -162,6 +197,10 @@
     socket.on('message', function(msg) {
         messages.innerHTML = msg + '<br>' + messages.innerHTML;
     });
+});
+</script>
+
+
 
 
 </script>
