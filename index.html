@@ -167,10 +167,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     const socket = io();
 
-    
+    let nameID = prompt('Please enter a user name:');
     let userName = localStorage.getItem('userName');
     if (!userName) {
-        userName = 'User' + Math.round(Math.random() * 10000);
+        userName = /*'User' + Math.round(Math.random() * 10000)*/ nameID;
         localStorage.setItem('userName', userName);
     }
 
