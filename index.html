@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let nameID = prompt('Please enter a user name:');
     let userName = localStorage.getItem('userName');
     if (!userName) {
-        userName = /*'User' + Math.round(Math.random() * 10000)*/ nameID;
+        userName = 'User' + Math.round(Math.random() * 10000);
         localStorage.setItem('userName', userName);
     }
 
